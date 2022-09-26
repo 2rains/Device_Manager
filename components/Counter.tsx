@@ -12,12 +12,12 @@ function Counter(props: counterProps) {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <div>
       <h1>{props.title}</h1>
-      <h2>카운터 : {count}</h2>
+      <h2 className="bg-blue-200">카운터 : {count}</h2>
       <button onClick={() => setCount(count + 1)}> +1 </button>
       <button onClick={() => setCount(count - 1)}> -1 </button>
-    </>
+    </div>
   );
 }
 
