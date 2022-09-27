@@ -182,3 +182,31 @@ const Home: NextPage = () => {
 
 export default Home;
 ```
+
+10. 타입스크립트 우회하기
+
+```
+// @ts-ignore
+오류자체만 우회함(바로 밑에 한 줄만 가능)
+주석과 함께 사용(단, 급할 때만 사용! 남용x)
+```
+
+11. `React`에서 배열에 값을 추가하기
+
+```
+...[기존배열, 새로운 배열 값]
+
+1. ...[] 이면 중괄호가 사라짐
+2. 새로운 배열 값이 기존 배열 마지막에 들어감
+3. 다시 중괄호 생기면서 배열에 값이 추가됨
+
+
+function 사용자추가함수() {
+    fetch("/api/adduser") //호출할 주소
+      .then((res) => res.json())
+      .then((json) => {
+        setUsers([...users, json.user]);
+        users.push(json.user);
+      });
+}
+```
