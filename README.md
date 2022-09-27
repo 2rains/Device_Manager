@@ -210,3 +210,32 @@ function 사용자추가함수() {
       });
 }
 ```
+
+12. `DarkMode` 적용
+
+```
+01. function 다크모드전환() {
+    document.body.classList.toggle("dark");
+    // 어떤 요소에 classList.toggle을 하면 있으면 없애고 없으면 있게 만들어 줌!!
+  }
+
+02. 다크모드 아이콘
+<div onClick={다크모드전환}/>
+
+03.
+<div className="dark:bg-[#1E1E20] dark:text-white"></div>
+```
+
+13. 그 외
+
+```
+# 자주 사용하는 CSS 함수 만들기
+> global.css(파일)
+
+.함수명 {
+  @apply text-white bg-[#5e7696] dark:bg-[#8e9fb6] dark:text-gray-800
+    hover:bg-[#9cbace]  dark:hover:bg-[#748b9b];
+}
+
+** @apply 꼭 사용하기(tailwind css를 사용하기 위해)
+```

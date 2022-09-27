@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.sm_btn {
+  @apply text-white bg-[#5e7696] dark:bg-[#8e9fb6] dark:text-gray-800
+    hover:bg-[#9cbace]  dark:hover:bg-[#748b9b];
+}
