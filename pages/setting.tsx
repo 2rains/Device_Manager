@@ -1,13 +1,18 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { json } from "stream/consumers";
 import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
-  const [location, setLocation] = useState("");
-  const [unit, setUnit] = useState("");
-  const [product, setProduct] = useState("");
-  const [memo, setMemo] = useState("");
+  const [location, setLocation] = useState(""); // 설치위치
+  const [type, setType] = useState(""); // 장치종류
+  const [unit, setUnit] = useState(""); // 단위
+  const [product, setProduct] = useState(""); // 제품명
+  const [memo, setMemo] = useState(""); //메모
+  const [addDevice, setAddDevice] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); //에러 메세지(입력 안 했을 경우)
+  const [enterDevice, setEnterDevice] = useState("");
 
   function 장비추가버튼클릭() {
     document.querySelector("#container_add_device")?.classList.toggle("hidden");
@@ -15,10 +20,54 @@ const Home: NextPage = () => {
     setUnit("");
     setProduct("");
     setMemo("");
+    setErrorMessage("");
   }
+
+  // <select> change
+  function 장치종류변경(event: React.FormEvent<HTMLSelectElement>) {
+    setType(event.currentTarget.value); // select에서 선택한 옵션의 value 값
+  }
+
+  function 장비등록() {
+    if (!product) {
+      setErrorMessage("제품명을 입력하세요!");
+      return;
+    }
+    if (!location) {
+      setErrorMessage("위치를 입력하세요!");
+      return;
+    }
+    if (!unit) {
+      setErrorMessage("단위를 입력하세요!");
+      return;
+    }
+    if (!type) {
+      setErrorMessage("장치종류를 선택하세요");
+      return;
+    } else setErrorMessage("");
+    // 입력폼에 데이터 있는 지 확인
+    const data = { location, type, unit, product, memo };
+    //서버에 body로 싣어서 보낼 데이터  -> add.ts파일로 보내줌
+    fetch("/api/device/add", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json));
+    // 전송완료시 입력창 초기화
+    //오류 있으면 표시해줘야 됨
+    //
+  }
+
+  useEffect(() => {
+    fetch("/api/device/all")
+      .then((res) => res.json())
+      .then((json) => console.log(json));
+  }, [enterDevice]);
+
   return (
     <Layout title={"SETTING"}>
-      <div className="p-6 space-y-6">
+      <div className="p-6 h-full overflow-y-scroll font-serif space-y-10">
         <div data-comment={"장비추가버튼"} className="flex justify-end">
           <button
             onClick={장비추가버튼클릭}
@@ -47,11 +96,24 @@ const Home: NextPage = () => {
 
         <div
           id={"container_add_device"}
-          data-comment={"New Device"}
-          className="space-y-5 "
+          data-comment={"새로운 디바이스 추가"}
+          className="space-y-5 hidden" // 보였다가 사라지게 하기
         >
           <hr />
           <div className="text-3xl font-bold">New Device</div>
+
+          <div className="flex flex-col">
+            <span>장치 종류 *</span>
+            <select
+              className="h-14 ring-2 ring-black text-gray-800 px-3"
+              onChange={장치종류변경}
+            >
+              <option hidden>장치 종류를 선택하세요</option>
+              <option value="TEMP">온도 센서</option>
+              <option value="HUMI">습도 센서</option>
+              <option value="CO2">CO2 센서</option>
+            </select>
+          </div>
 
           <div className="flex flex-col">
             <span>제품명 *</span>
@@ -97,11 +159,34 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <button className="sm_btn w-full py-5 text-xl font-bold rounded ">
+          {errorMessage ? (
+            <div className="text-red-500">{errorMessage}</div>
+          ) : null}
+
+          <button
+            onClick={장비등록}
+            className="sm_btn w-full py-5 text-xl font-bold rounded "
+          >
             등록
           </button>
 
           <hr />
+        </div>
+        <div data-comment={"장비삭제메뉴"}>
+          <div>
+            {[1, 2].map((device, idx) => (
+              <div key={idx} className="border-b-4 py-5 flex justify-between">
+                <div>
+                  <div>6333b17d96bddf522204wa89</div>
+                  <div>[HUMI] 샤오미 공청기(거실)</div>
+                  <div>메모</div>
+                </div>
+                <button className="text-red-500 bg-red-200 w-16 h-16 rounded-xl">
+                  삭제
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Layout>

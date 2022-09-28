@@ -229,7 +229,7 @@ function 사용자추가함수() {
 13. 그 외
 
 ```
-# 자주 사용하는 CSS 함수 만들기
+# 자주 사용하는 CSS 함수 만들기 #
 > global.css(파일)
 
 .함수명 {
@@ -238,4 +238,35 @@ function 사용자추가함수() {
 }
 
 ** @apply 꼭 사용하기(tailwind css를 사용하기 위해)
+
+
+# `데이터베이스` 세팅 #
+> /prisma/schema.prisma
+model Device {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  product  String
+  location String
+  type     String // TEMP HUMI CO2
+  unit     String
+  memo     String?
+
+  sencings Sencing[] // 모델 Sencing 자체를 데이터형으로 지정하면 자동으로 관계 맺어줌(prisma 기능)
+}
+
+model Sencing {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  value    Float
+  Device   Device? @relation(fields: [deviceId], references: [id])  // 자동으로 관계 형성해줌
+  deviceId String? @db.ObjectId // 위의 모델에서 Device id 들어옴!
+}
+
+# `데이터베이스` 세팅 후 #
+1. 스키마 변경하면  npx prisma db push
+2. 실행했는 지 확인(웹브라우저) npx prisma studio
 ```

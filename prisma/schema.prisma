@@ -1,5 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// 데이타베이스 - 1.모델 정의 / 2.프리즈마 DB PUSH 
 
 generator client {
   provider = "prisma-client-js"
@@ -27,3 +28,36 @@ model Post {
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
+
+enum DeviceType {
+  TEMP
+  HUMI
+  CO2
+}
+
+model Device {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  product  String
+  location String     @default("거실")
+  type     DeviceType // TEMP HUMI CO2
+  unit     String
+  memo     String?
+
+  sencings Sencing[] // 자동으로 관계 형성해줌!
+}
+
+model Sencing {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  value    Float
+  Device   Device? @relation(fields: [deviceId], references: [id])
+  deviceId String? @db.ObjectId //Device id 들어옴!
+}
+
+// 1. 스키마 변경 하면  npx prisma db push
+// 2. 실행했는 지 확인(웹브라우저) npx prisma studio

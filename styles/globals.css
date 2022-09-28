@@ -6,3 +6,7 @@
   @apply text-white bg-[#5e7696] dark:bg-[#8e9fb6] dark:text-gray-800
     hover:bg-[#9cbace]  dark:hover:bg-[#748b9b];
 }
+
+.sm_btn2 {
+  @apply from-[#6b6286] to-[#93a4da];
+}
