@@ -1,5 +1,6 @@
 // 서버 함수임!!!
 // 미리 데이터 받을 형식 갖춘 다음에 서버 만들어야 함
+// 신규 디바이스 추가 파일
 
 import { Device } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -8,9 +9,8 @@ import client from "../../../libs/server/client";
 
 interface Data {
   ok: boolean;
-  //   user?: User;
   error?: String;
-  newDevice?: Device;
+  newDevice?: Device; // 응답메세지
 }
 
 export default async function handler(
@@ -30,7 +30,7 @@ export default async function handler(
   //     body: { product, location, type, unit, memo },
   //   } = request;
   const { product, location, type, unit, memo } = JSON.parse(request.body); // 편지 내용  setting.tsx의 fetch에서 보내줌
-
+  // request.body가 요청 메세지임
   // 이렇게 쓰면 괄호 풀어서 문자열로 한 번에 들어감!!!!!!!
 
   // 입력 필드 검증!
@@ -69,7 +69,7 @@ export default async function handler(
       },
     });
 
-    response.status(200).json({ ok: true, newDevice });
+    response.status(200).json({ ok: true, newDevice }); // 응답메세지(처리결과)
   } catch (err) {
     response.status(200).json({ ok: false, error: `${err}` });
   } finally {

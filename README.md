@@ -285,4 +285,23 @@ finally만 추가해주면 됌(전체에 추가해주기)
 
 VerCel > setting > Environment > Variables > NAME-DATABASE_URL에 넣기 / VALUE-"주소" > 다시 버셀 내 프로젝트 들어가서 > Deployment에 reDeploy하기(재업로드)
 
+
+# 정리 #
+클라이언트(pc,태블릿(즉,사용자))는 서버(클라이언트랑 통신하는 애)를 통해 DB서버에 들어감
+디비 입장에선 서버가 클라이언트임
+클라이언트 요청 -> 서버는 DB에게 요청 -> DB는 서버에게 줌 -> 서버는 DB를 json형태로 클라이언트에게 줌
+클라이언트(react) - 서버(next.js) - DB(몽고디비)
+API(서버)는  클라이언트와 통신하는 파일임!!!!!
+
+
+# 정리-2 #
+http://api/device/fgds/[id]?name=이슬비&age=24
+                          {--------URL파라미터}
+req.query.id
+req.query.name
+req.query.age
+
+url 자체에 데이터를 실어서 보내는 방식임!
+
+
 ```
