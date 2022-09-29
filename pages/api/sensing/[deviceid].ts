@@ -27,7 +27,7 @@ export default async function handler(
   try {
     const { deviceid } = request.query;
 
-    console.log("센싱값 가져올 장치 ID : " + deviceid);
+    // console.log("센싱값 가져올 장치 ID : " + deviceid);
 
     const sensing = await client.sencing.findFirst({
       where: {
@@ -38,11 +38,11 @@ export default async function handler(
       },
     });
 
-    console.log("측정결과값 ======");
-    console.log(sensing);
-
     response.status(200).json({ ok: true, value: sensing?.value });
   } catch (err) {
     response.status(200).json({ ok: false, error: `${err}` });
+  } finally {
+    //예외가 있던 없던 실행되는 블록임!
+    await client.$disconnect();
   }
 }

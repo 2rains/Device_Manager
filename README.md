@@ -269,4 +269,15 @@ model Sencing {
 # `데이터베이스` 세팅 후 #
 1. 스키마 변경하면  npx prisma db push
 2. 실행했는 지 확인(웹브라우저) npx prisma studio
+
+# `DB` 끊어주기! #
+try{
+} catch{
+}finally {
+    //예외가 있던 없던 실행되는 블록임!
+    await client.$disconnect();
+  }
+
+finally만 추가해주면 됌(전체에 추가해주기)
+연결 해제 안 해주면 계정 잠김!(디도스 공격인 줄 앎)
 ```

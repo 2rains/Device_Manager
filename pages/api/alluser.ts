@@ -21,5 +21,9 @@ export default async function handler(
     console.log(users);
     res.status(200).json({ name: "okokok", users: users });
     //     res.status(200).json({ name: "okokok", users }); users:users를 users로 사용가능!!
-  } catch (err) {}
+  } catch (err) {
+  } finally {
+    //예외가 있던 없던 실행되는 블록임!
+    await client.$disconnect();
+  }
 }

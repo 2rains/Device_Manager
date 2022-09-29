@@ -27,5 +27,8 @@ export default async function handler(
     res.status(200).json({ ok: true, deletedId: deleteUser.id });
   } catch (err) {
     res.status(200).json({ ok: false, err: `${err}` });
+  } finally {
+    //예외가 있던 없던 실행되는 블록임!
+    await client.$disconnect();
   }
 }

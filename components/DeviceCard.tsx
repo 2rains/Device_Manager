@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 
 interface DeviceCardProps {
   device: Device;
+  realTime: Boolean;
 }
 
-function DeviceCard({ device }: DeviceCardProps) {
+function DeviceCard({ device, realTime }: DeviceCardProps) {
   const [value, setValue] = useState(-1);
+  const [timerID, setTimerID] = useState<NodeJS.Timer>();
 
-  useEffect(() => {
+  function 센싱데이터업데이트() {
     console.log(`컴포넌트 로딩됨 - ${device.id}`);
     fetch(`/api/sensing/${device.id}`)
       .then((res) => res.json())
@@ -17,6 +19,27 @@ function DeviceCard({ device }: DeviceCardProps) {
           setValue(json.value);
         }
       });
+  }
+
+  useEffect(() => {
+    // 실시간 버튼 바뀔 때마다 출력해줌(realtime=실시간버튼)
+    console.log(`${device.id} - ${realTime}`);
+
+    if (realTime) {
+      //타이머 실행해서 데이터 패칭
+      const tempTimerID = setInterval(() => {
+        센싱데이터업데이트();
+        console.log(`[실시간ON]${device.id} - ${realTime}`);
+      }, 10000);
+      setTimerID(tempTimerID);
+    } else {
+      //타이머 off
+      clearInterval(timerID);
+    }
+  }, [realTime]);
+
+  useEffect(() => {
+    센싱데이터업데이트();
   }, []);
 
   return (

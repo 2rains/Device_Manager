@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-toggle/style.css";
+/* // home화면 실시간 toggle버튼 */
+
 .sm_btn {
   @apply text-white bg-[#5e7696] dark:bg-[#8e9fb6] dark:text-gray-800
     hover:bg-[#9cbace]  dark:hover:bg-[#748b9b];
