@@ -280,4 +280,9 @@ try{
 
 finally만 추가해주면 됌(전체에 추가해주기)
 연결 해제 안 해주면 계정 잠김!(디도스 공격인 줄 앎)
+
+# VerCel(DB파일 올리기) #
+
+VerCel > setting > Environment > Variables > NAME-DATABASE_URL에 넣기 / VALUE-"주소" > 다시 버셀 내 프로젝트 들어가서 > Deployment에 reDeploy하기(재업로드)
+
 ```
