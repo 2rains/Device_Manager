@@ -1,3 +1,4 @@
+import { Device } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,14 +14,19 @@ const Home: NextPage = () => {
   const [addDevice, setAddDevice] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); //에러 메세지(입력 안 했을 경우)
   const [enterDevice, setEnterDevice] = useState("");
+  const [devices, setDevices] = useState<Device[]>([]);
 
-  function 장비추가버튼클릭() {
-    document.querySelector("#container_add_device")?.classList.toggle("hidden");
+  function ClearForm() {
     setLocation("");
     setUnit("");
     setProduct("");
     setMemo("");
     setErrorMessage("");
+  }
+
+  function 장비추가버튼클릭() {
+    document.querySelector("#container_add_device")?.classList.toggle("hidden");
+    ClearForm();
   }
 
   // <select> change
@@ -53,17 +59,52 @@ const Home: NextPage = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        console.log(json);
+
+        if (json.ok) {
+          // 등록성공
+          document
+            .querySelector("#container_add_device")
+            ?.classList.toggle("hidden"); // 등록폼 숨기기
+          ClearForm(); // 입력창 초기화
+
+          setDevices([...devices, json.newDevice]);
+        } else {
+          //등록실패
+          setErrorMessage("등록에 실패했습니다.");
+        }
+      });
     // 전송완료시 입력창 초기화
     //오류 있으면 표시해줘야 됨
     //
   }
 
+  function 장치삭제(deviceId: string) {
+    console.log(deviceId);
+    // 삭제 API 호출
+    fetch(`/api/device/${deviceId}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.ok) {
+          // 삭제완료
+          console.log(json.deleteDevice.id);
+
+          const tempArr = devices.filter(
+            (device) => device.id !== json.deleteDevice.id
+          );
+          setDevices(tempArr);
+        }
+      });
+  }
+
   useEffect(() => {
     fetch("/api/device/all")
       .then((res) => res.json())
-      .then((json) => console.log(json));
-  }, [enterDevice]);
+      .then((json) => setDevices(json.alldevice));
+  }, []);
 
   return (
     <Layout title={"SETTING"}>
@@ -174,14 +215,19 @@ const Home: NextPage = () => {
         </div>
         <div data-comment={"장비삭제메뉴"}>
           <div>
-            {[1, 2].map((device, idx) => (
+            {devices.map((device, idx) => (
               <div key={idx} className="border-b-4 py-5 flex justify-between">
                 <div>
-                  <div>6333b17d96bddf522204wa89</div>
-                  <div>[HUMI] 샤오미 공청기(거실)</div>
-                  <div>메모</div>
+                  <div>{device.id}</div>
+                  <div>
+                    [{device.type}] {device.product}({device.location})
+                  </div>
+                  <div>{device.memo}</div>
                 </div>
-                <button className="text-red-500 bg-red-200 w-16 h-16 rounded-xl">
+                <button
+                  onClick={() => 장치삭제(device.id)}
+                  className="text-red-500 bg-red-200 w-16 h-16 rounded-xl"
+                >
                   삭제
                 </button>
               </div>

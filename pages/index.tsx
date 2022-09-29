@@ -1,8 +1,24 @@
+import { Device } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import DeviceCard from "../components/DeviceCard";
 import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
+  const [devices, setDevices] = useState<Device[]>([]);
+
+  useEffect(() => {
+    fetch("/api/device/all")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.ok) {
+          setDevices(json.alldevice);
+          // console.log(json.alldevice);
+        }
+      });
+  }, []);
+
   return (
     <Layout title={"HOME"}>
       <div className="h-full overflow-y-scroll p-6 font-serif space-y-10">
@@ -42,28 +58,8 @@ const Home: NextPage = () => {
           <div>실시간 버튼 자리</div>
         </div>
         <div id="센서목룍" className="flex flex-wrap">
-          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((device, idx) => {
-            return (
-              <div
-                key={idx}
-                data-comment="장비카드"
-                className="m-5 bg-[#94bcd6] dark:bg-[#6c899c] rounded-3xl w-60 h-52 p-4 flex flex-col justify-between"
-              >
-                <div className="flex justify-end">
-                  <span className="text-5xl">25</span>
-                  <span className="text-2xl">%</span>
-                </div>
-
-                <div className="flex flex-col">
-                  <span className="text-[#ececec] font-medium">
-                    안방 - 메모
-                  </span>
-                  <span className="text-xl font-semibold">
-                    샤오미 공기청정기
-                  </span>
-                </div>
-              </div>
-            );
+          {devices.map((device, idx) => {
+            return <DeviceCard key={idx} device={device} />;
           })}
         </div>
       </div>
