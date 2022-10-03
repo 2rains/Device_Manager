@@ -151,6 +151,7 @@ const Home: NextPage = () => {
             <select
               className="h-14 ring-2 ring-black text-gray-800 px-3"
               onChange={장치종류변경}
+              value={type}
             >
               <option hidden>장치 종류를 선택하세요</option>
               <option value="TEMP">온도 센서</option>
@@ -218,6 +219,13 @@ const Home: NextPage = () => {
         </div>
         <div data-comment={"장비삭제메뉴"}>
         <h2 className="text-xl font-bold">장치목록</h2>
+
+ {/* 에러 코드!!
+        {0 < devices.length ? null : (
+            <div className="text-red-400 font-bold mt-5 text-center text-2xl">
+              장치를 등록 해주세요
+            </div>
+          )} */}
 
           <div>
             {devices && devices.map((device, idx) => (
