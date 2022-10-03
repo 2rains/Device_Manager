@@ -215,7 +215,7 @@ const Home: NextPage = () => {
         </div>
         <div data-comment={"장비삭제메뉴"}>
           <div>
-            {devices.map((device, idx) => (
+            {devices && devices.map((device, idx) => (
               <div key={idx} className="border-b-4 py-5 flex justify-between">
                 <div>
                   <div>{device.id}</div>
