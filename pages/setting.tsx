@@ -22,6 +22,8 @@ const Home: NextPage = () => {
     setProduct("");
     setMemo("");
     setErrorMessage("");
+    setType("");
+
   }
 
   function 장비추가버튼클릭() {
@@ -61,7 +63,6 @@ const Home: NextPage = () => {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-
         if (json.ok) {
           // 등록성공
           document
@@ -69,7 +70,8 @@ const Home: NextPage = () => {
             ?.classList.toggle("hidden"); // 등록폼 숨기기
           ClearForm(); // 입력창 초기화
 
-          setDevices([...devices, json.newDevice]);
+          const tempArr = [...devices, json.newDevice];
+          setDevices(tempArr);
         } else {
           //등록실패
           setErrorMessage("등록에 실패했습니다.");
@@ -81,7 +83,9 @@ const Home: NextPage = () => {
   }
 
   function 장치삭제(deviceId: string) {
-    console.log(deviceId);
+    // console.log(deviceId);
+    if (!deviceId) return;
+
     // 삭제 API 호출
     fetch(`/api/device/${deviceId}`, {
       method: "DELETE",
@@ -142,7 +146,6 @@ const Home: NextPage = () => {
         >
           <hr />
           <div className="text-3xl font-bold">New Device</div>
-
           <div className="flex flex-col">
             <span>장치 종류 *</span>
             <select
@@ -214,13 +217,23 @@ const Home: NextPage = () => {
           <hr />
         </div>
         <div data-comment={"장비삭제메뉴"}>
+        <h2 className="text-xl font-bold">장치목록</h2>
+
+        {devices && 0 < devices.length ? null : (
+            <div className="text-red-400 font-bold mt-5 text-center text-2xl">
+              장치를 등록 해주세요
+            </div>
+          )}
+
           <div>
             {devices && devices.map((device, idx) => (
               <div key={idx} className="border-b-4 py-5 flex justify-between">
                 <div>
                   <div>{device.id}</div>
                   <div>
-                    [{device.type}] {device.product}({device.location})
+                  [{device.type}]{" "}
+                    <span className="font-bold">{device.product}</span> (
+                    {device.location})
                   </div>
                   <div>{device.memo}</div>
                 </div>
