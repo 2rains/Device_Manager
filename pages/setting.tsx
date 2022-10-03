@@ -219,12 +219,6 @@ const Home: NextPage = () => {
         <div data-comment={"장비삭제메뉴"}>
         <h2 className="text-xl font-bold">장치목록</h2>
 
-        {devices && 0 < devices.length ? null : (
-            <div className="text-red-400 font-bold mt-5 text-center text-2xl">
-              장치를 등록 해주세요
-            </div>
-          )}
-
           <div>
             {devices && devices.map((device, idx) => (
               <div key={idx} className="border-b-4 py-5 flex justify-between">
