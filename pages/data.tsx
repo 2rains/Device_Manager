@@ -86,7 +86,7 @@ const Home: NextPage = () => {
               onChange={센서값변경}
             ></input>
             <button onClick={등록버튼클릭} className="sm_btn w-full py-5 text-xl font-bold rounded">
-              등 록
+              등  록
             </button>
           </div>
         ) : null}
