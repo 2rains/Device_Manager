@@ -9,13 +9,11 @@ interface LayoutProps {
 
 export default function Layout(props: LayoutProps) {
   // Layout 프롭스 받아오려면 (props 적으면 됨)-> index, data, setting 파일에서 <layout title:{"HOME, SETTING, DATA"}적으면 웹에 적용됨
-
   const router = useRouter();
-
-  // console.log(router.pathname);
 
   function 다크모드전환() {
     document.body.classList.toggle("dark");
+    // document.querySelector("body")?.classList.toggle("dark"); 위랑 같음!
     // 어떤 요소에 classList.toggle을 하면 있으면 없애고 없으면 있게 만들어 줌!!
   }
 

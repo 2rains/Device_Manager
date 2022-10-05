@@ -19,9 +19,8 @@ export default async function handler(
   }
 
   try {
-    console.log(req.query.id);
-    console.log(req.body);
-
+    // console.log(req.query.id);
+    // console.log(req.body);
     const obj = JSON.parse(req.body);
 
     if (!obj.name) {

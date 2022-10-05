@@ -3,13 +3,12 @@
 
 import { Device } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { json } from "stream/consumers";
 import client from "../../../libs/server/client";
 
 interface Data {
   ok: boolean;
-  error?: String;
   alldevice?: Device[];
+  error?: String;
 }
 
 export default async function handler(

@@ -1,13 +1,14 @@
 // 서버 함수임!!!
 // 미리 데이터 받을 형식 갖춘 다음에 서버 만들어야 함
 
-import { Device } from "@prisma/client";
+import { Device, DeviceType } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { json } from "stream/consumers";
 import client from "../../../libs/server/client";
 
 interface Data {
   ok: boolean;
+  id?:String
   error?: String;
   deleteDevice?: Device;
 }
@@ -26,19 +27,17 @@ export default async function handler(
 
   try {
     const { deviceid } = request.query;
-
-    console.log("삭제할 장치 ID : " + deviceid);
-
+    // console.log("삭제할 장치 ID : " + deviceid);
     const deleteDevice = await client.device.delete({
       where: {
         id: deviceid?.toString(),
       },
     });
 
-    console.log("삭제된 디바이스");
-    console.log(deleteDevice);
+    // console.log("삭제된 디바이스");
+    // console.log(deleteDevice);
 
-    response.status(200).json({ ok: true, deleteDevice });
+    response.status(200).json({ ok: true, id: deleteDevice.id });
   } catch (err) {
     response.status(200).json({ ok: false, error: `${err}` });
   } finally {

@@ -4,7 +4,6 @@
 
 import { Device } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { json } from "stream/consumers";
 import client from "../../../libs/server/client";
 
 interface Data {

@@ -11,7 +11,7 @@ function DeviceCard({ device, realTime }: DeviceCardProps) {
   const [timerID, setTimerID] = useState<NodeJS.Timer>();
 
   function 센싱데이터업데이트() {
-    console.log(`컴포넌트 로딩됨 - ${device.id}`);
+    // console.log(`컴포넌트 로딩됨 - ${device.id}`);
     fetch(`/api/sensing/${device.id}`)
       .then((res) => res.json())
       .then((json) => {
