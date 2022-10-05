@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     // console.log(`토글변경됨 - ${!bToggle}`);
 
     if (!bToggle) {
-      console.log("실시간on");
+      console.log("실시간on ");
     } else {
       console.log("실시간off");
     }
