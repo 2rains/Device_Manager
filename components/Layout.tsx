@@ -48,7 +48,7 @@ export default function Layout(props: LayoutProps) {
           <div className="h-[80vh]">{props.children}</div>
           <footer className="h-[100px] border-t-4">
             <nav className="flex justify-between h-full">
-              <Link href={"/"}>
+              <Link href={" /"}>
                 <button
                   className={cls(
                     "w-full flex items-center justify-center hover:bg-[#abbbde] dark:hover:bg-[#627a86] ",
