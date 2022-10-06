@@ -69,10 +69,9 @@ const Home: NextPage = () => {
         <div>충남 관광명소 페이지</div>
         <div>{totalCnt}개의 관광명소가 있당</div>
         {tours?.map((tour) => (
-          <Link href={`/cntour/${tour.mng_no}`}>
+          <Link key={tour.mng_no} href={`/cntour/${tour.mng_no}`}>
             <button>
               <div key={tour.mng_no}>
-                <div></div>
                 <div>{tour.local_nm}</div>
                 <div>{tour.addr}</div>
                 <img src={tour.list_img}></img>

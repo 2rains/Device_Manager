@@ -79,7 +79,6 @@ const Home: NextPage = () => {
           <div className="space-y-5">
             <h2 className="text-xl font-bold">선택장비 : {selectedId} </h2>
             <input
-            key={selectedId}
               type={"number"}
               placeholder="측정값을 입력하세요"
               className="w-full h-12 ring-2 ring-black text-gray-800 px-3"
