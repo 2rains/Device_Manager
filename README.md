@@ -5,7 +5,7 @@
 next.js typescript 프로젝트 생성
 
 ```
-> npx crate-next-app <폴더명> --typescript
+> npx create-next-app <폴더명> --typescript
 ```
 
 # tailwind CSS(Next.js) 적용
