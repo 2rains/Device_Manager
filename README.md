@@ -1,6 +1,6 @@
 //markDown 텍스트->HTML 변환
 
-# crate-next-app
+# create-next-app
 
 next.js typescript 프로젝트 생성
 
