@@ -287,6 +287,11 @@ finally만 추가해주면 됌(전체에 추가해주기)
 
 VerCel > setting > Environment > Variables > NAME-DATABASE_URL에 넣기 / VALUE-"주소" > 다시 버셀 내 프로젝트 들어가서 > Deployment에 reDeploy하기(재업로드)
 
+# Git 클론 시 #
+```
+> npm install
+> npm init
+```
 
 # 정리 #
 클라이언트(pc,태블릿(즉,사용자))는 서버(클라이언트랑 통신하는 애)를 통해 DB서버에 들어감
